@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RustDesk 远程桌面服务</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .connection-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .info-item {
+            margin-bottom: 25px;
+        }
+        
+        .label {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            word-break: break-all;
+        }
+        
+        .download-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .download-btn {
+            display: block;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .steps {
+            counter-reset: step-counter;
+        }
+        
+        .step {
+            counter-increment: step-counter;
+            margin-bottom: 25px;
+            padding-left: 50px;
+            position: relative;
+        }
+        
+        .step:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .step h3 {
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RustDesk 远程桌面服务</h1>
+            <p class="subtitle">安全、快速、开源的远程桌面解决方案</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="card connection-info">
+                <h2>连接信息</h2>
+                <div class="info-item">
+                    <div class="label">
+                        <span class="icon">🌐</span> ID服务器地址
+                    </div>
+                    <div class="value">rust.6888866.xyz</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">
+                        <span class="icon">🔑</span> Key
+                    </div>
+                    <div class="value">kL2uG2lPfJVNf1QaKopBCaEb0y7YJI2lzLdNXvxTRtc=</div>
+                </div>
+                <!-- <div class="warning">
+                    <strong>安全提示：</strong>请在首次连接后立即修改默认密码，确保远程访问安全。
+                </div> -->
+            </div>
+            
+            <div class="card">
+                <h2>客户端下载</h2>
+                <div class="download-links">
+                    <a href="https://github.com/rustdesk/rustdesk/releases" class="download-btn">
+                        🤖下载
+                    </a>
+                    <!-- <a href="#" class="download-btn">
+                        🍎 macOS 客户端
+                    </a>
+                    <a href="#" class="download-btn">
+                        🐧 Linux 客户端 (AppImage)
+                    </a>
+                    <a href="#" class="download-btn">
+                        🤖 Android 客户端
+                    </a>
+                    <a href="#" class="download-btn">
+                        📱 iOS 客户端
+                    </a> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>使用说明</h2>
+            <div class="steps">
+                <div class="step">
+                    <h3>下载并安装客户端</h3>
+                    <p>根据您的操作系统选择对应的客户端版本下载并安装到本地计算机。</p>
+                </div>
+                <div class="step">
+                    <h3>配置服务器信息</h3>
+                    <p>打开 RustDesk 客户端，在设置中找到网络-ID/中继服务器配置选项，输入ID服务器地址：<strong>rust.6888866.xyz</strong>
+                    以及Key
+                    </p>
+                </div>
+                <div class="step">
+                    <h3>设置客户端</h3>
+                    <p>在客户端中设置访问密码（建议首次连接后立即修改为复杂密码）</p>
+                </div>
+                <div class="step">
+                    <h3>获取连接ID</h3>
+                    <p>在客户端主界面查看您的设备ID，这是其他用户连接您设备时需要的标识符。</p>
+                </div>
+                <div class="step">
+                    <h3>建立远程连接</h3>
+                    <p>在另一台设备上输入目标设备的ID和密码，即可建立远程桌面连接。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>常见问题</h2>
+            <div class="step">
+                <h3>无法连接到服务器怎么办？</h3>
+                <p>请检查网络连接是否正常，确认服务器地址输入正确，防火墙是否阻止了连接。</p>
+            </div>
+            <div class="step">
+                <h3>连接速度慢如何优化？</h3>
+                <p>可以尝试降低画面质量、关闭音频传输、使用有线网络连接等方式提升性能。</p>
+            </div>
+            <div class="step">
+                <h3>如何提高安全性？</h3>
+                <p>建议修改默认密码，启用双重验证，定期更新客户端版本。</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 快点 RustDesk 远程桌面服务 | 安全可靠的远程访问解决方案</p>
+        <p>技术支持：admin@huangetech.com</p>
+    </footer>
+</body>
+</html>
